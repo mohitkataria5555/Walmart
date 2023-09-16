@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 
 @Service
@@ -26,8 +28,10 @@ public class CategoryService {
     }
 
     public List<CategoryDto> viewAll(){
+        List<Category> findall=this.categoryRepository.findAll();
+        List<CategoryDto> allDto =findall.stream().map(category -> this.modelMapper.map(category,CategoryDto.class)).collect(Collectors.toList());
 
-        return null;
+        return allDto;
     }
 
     public CategoryDto viewCategoryById(int cid){
@@ -44,10 +48,11 @@ public class CategoryService {
 
     public CategoryDto updateCategory(int cid, CategoryDto newc){
         Category oldCat=this.categoryRepository.findById(cid).orElseThrow(()->new ResourceNotFoundException("Category id Not Found."));
-        oldCat.setCategory_id(newc.getCategory_id());
-        oldCat.setTitle(newc.getTitle());
 
-        return this.modelMapper.map(oldCat,CategoryDto.class);
+        oldCat.setTitle(newc.getTitle());
+        Category save= this.categoryRepository.save(oldCat);
+
+        return this.modelMapper.map(save,CategoryDto.class);
 
     }
 
