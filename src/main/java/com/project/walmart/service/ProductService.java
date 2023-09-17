@@ -1,8 +1,10 @@
 package com.project.walmart.service;
 
 import com.project.walmart.Exception.ResourceNotFoundException;
+import com.project.walmart.model.Category;
 import com.project.walmart.model.Product;
 import com.project.walmart.payload.ProductDto;
+import com.project.walmart.repository.CategoryRepository;
 import com.project.walmart.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,19 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public ProductDto createProduct(ProductDto product){
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    public ProductDto createProduct(ProductDto product,int catid){
+        //fetch category is available or not
+        Category category=this.categoryRepository.findById(catid).orElseThrow(()->new ResourceNotFoundException("Category doesn't exists"));
         //ProductDto to Product
-        Product entity=toEntity(product);
-        Product save =productRepository.save(entity);
+        Product product1=toEntity(product);
+        product1.setCategory(category);
+        Product save=this.productRepository.save(product1);
+
+
+        //Product save =productRepository.save(entity);
         //product to productDto
         ProductDto dto = toDto(save);
 

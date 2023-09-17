@@ -9,6 +9,7 @@ public class Category {
     private int category_id;
     private String title;
 
+
     public Category() {
         super();
     }
@@ -33,4 +34,7 @@ public class Category {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
+
 }

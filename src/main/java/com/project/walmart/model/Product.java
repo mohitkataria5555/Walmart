@@ -15,6 +15,8 @@ public class Product {
     private boolean live;
     private String product_Image;
     private String product_desc;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category category;
 
     public Product(){
 
@@ -98,5 +100,13 @@ public class Product {
 
     public void setProduct_desc(String product_desc) {
         this.product_desc = product_desc;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

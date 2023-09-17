@@ -18,10 +18,10 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/create")
+    @PostMapping("/create/{catid}")
     @ResponseBody
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto product) {
-        ProductDto createProduct = productService.createProduct(product);
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto product,@PathVariable int catid) {
+        ProductDto createProduct = productService.createProduct(product,catid);
         return new ResponseEntity<>(createProduct, HttpStatus.CREATED);
     }
 
