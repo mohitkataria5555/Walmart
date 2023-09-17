@@ -3,6 +3,7 @@ package com.project.walmart.service;
 import com.project.walmart.Exception.ResourceNotFoundException;
 import com.project.walmart.model.Category;
 import com.project.walmart.model.Product;
+import com.project.walmart.payload.CategoryDto;
 import com.project.walmart.payload.ProductDto;
 import com.project.walmart.repository.CategoryRepository;
 import com.project.walmart.repository.ProductRepository;
@@ -80,6 +81,7 @@ public class ProductService {
         p.setProduct_desc(productDto.getProduct_desc());
         p.setProduct_price(productDto.getProduct_price());
         p.setProduct_Image(productDto.getProduct_Image());
+        p.setProduct_quantity(productDto.getProduct_quantity());
         p.setLive(productDto.isLive());
         p.setStock(productDto.isStock());
         return p;
@@ -95,6 +97,12 @@ public class ProductService {
         productDto.setProduct_Image(product.getProduct_Image());
         productDto.setLive(product.isLive());
         productDto.setStock(product.isStock());
+
+        CategoryDto categoryDto=new CategoryDto();
+        categoryDto.setCategory_id(product.getCategory().getCategory_id());
+        categoryDto.setTitle(product.getCategory().getTitle());
+
+        productDto.setCategory(categoryDto);
 
         return productDto;
     }

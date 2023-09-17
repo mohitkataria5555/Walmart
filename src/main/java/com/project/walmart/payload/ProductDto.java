@@ -1,5 +1,9 @@
 package com.project.walmart.payload;
 
+import com.project.walmart.model.Category;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+
 public class ProductDto {
 
     private int product_id;
@@ -14,6 +18,8 @@ public class ProductDto {
     public ProductDto() {
         super();
     }
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CategoryDto category;
 
     public ProductDto(int product_id, String product_name, double product_price, boolean stock, int product_quantity,
                       boolean live, String product_Image, String product_desc) {
@@ -89,5 +95,13 @@ public class ProductDto {
 
     public void setProduct_desc(String product_desc) {
         this.product_desc = product_desc;
+    }
+
+    public CategoryDto getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryDto category) {
+        this.category = category;
     }
 }
