@@ -4,6 +4,7 @@ import com.project.walmart.model.Product;
 import com.project.walmart.payload.ProductDto;
 import com.project.walmart.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,11 @@ public class ProductController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<List<ProductDto>> viewAllProduct(){
-        List<ProductDto> viewAll =productService.viewAll();
-        return  new ResponseEntity<List<ProductDto>>(viewAll,HttpStatus.ACCEPTED);
+    public ResponseEntity<Page<ProductDto>> viewAllProduct(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<ProductDto> viewAll = productService.viewAll(page, size);
+        return new ResponseEntity<>(viewAll, HttpStatus.OK);
     }
     @GetMapping("/view/{productId}")
     public ResponseEntity<ProductDto> viewProductById(@PathVariable int productId){

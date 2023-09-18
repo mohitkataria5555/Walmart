@@ -8,6 +8,9 @@ import com.project.walmart.payload.ProductDto;
 import com.project.walmart.repository.CategoryRepository;
 import com.project.walmart.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,13 +40,13 @@ public class ProductService {
 
         return dto;
     }
-    public List<ProductDto> viewAll(){
-        //ProductDto to Product
-       List<Product> findAll = productRepository.findAll();
-       //Product to productDto
-        List<ProductDto>  findAllDto = findAll.stream().map(product -> this.toDto(product)).collect(Collectors.toList());
-       return findAllDto;
+    public Page<ProductDto> viewAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> products = productRepository.findAll(pageable);
+        Page<ProductDto> productDtos = products.map(this::toDto);
+        return productDtos;
     }
+
     public ProductDto viewProductById(int pid){
         //ProductDto  to  product
         Product findById= productRepository.findById(pid).orElseThrow(()->new ResourceNotFoundException(+pid+"product not found for this product id"));
