@@ -52,5 +52,11 @@ public class ProductController {
         return new ResponseEntity<ProductDto>(updatedProduct,HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<Product>> getProductByCategory(@PathVariable int categoryId){
+        List<Product> findByCategory = this.productService.findProductByCategory(categoryId);
+      return new ResponseEntity<List<Product>>(findByCategory,HttpStatus.ACCEPTED);
+    }
+
 
 }

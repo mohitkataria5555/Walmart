@@ -109,4 +109,11 @@ public class ProductService {
 
         return productDto;
     }
+
+    public  List<Product> findProductByCategory(int categoryid){
+
+        Category Cat= this.categoryRepository.findById(categoryid).orElseThrow(()->new ResourceNotFoundException("Category Id Not Found."));
+        List<Product> findbyCategory =this.productRepository.findByCategory(Cat);
+        return findbyCategory;
+    }
 }

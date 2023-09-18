@@ -23,7 +23,7 @@ public class Product {
     }
 
     public Product(int product_id, String product_name, double product_price, boolean stock, int product_quantity,
-                   boolean live, String product_Image, String product_desc) {
+                   boolean live, String product_Image, String product_desc,Category category) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_price = product_price;
@@ -32,6 +32,7 @@ public class Product {
         this.live = live;
         this.product_Image = product_Image;
         this.product_desc = product_desc;
+        this.category=category;
     }
 
     public int getProduct_id() {
