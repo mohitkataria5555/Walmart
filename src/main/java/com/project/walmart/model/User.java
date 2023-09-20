@@ -25,14 +25,16 @@ public class User {
     @Column(name = "CreateAt")
     private Date date;
     private boolean active;
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 
 
     public User() {
         super();
     }
 
-    public User(int user_id, String name, String email, String password, String address,
-                String about, String gender, String phone, Date date, boolean active) {
+    public User(int user_id, String name, String email, String password,
+                String address, String about, String gender, String phone, Date date, boolean active, Cart cart) {
         this.user_id = user_id;
         this.name = name;
         this.email = email;
@@ -43,7 +45,9 @@ public class User {
         this.phone = phone;
         this.date = date;
         this.active = active;
+        this.cart = cart;
     }
+
 
     public int getUser_id() {
         return user_id;
@@ -59,6 +63,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public String getEmail() {
